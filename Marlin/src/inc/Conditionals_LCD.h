@@ -16,7 +16,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *
  */
 #pragma once
@@ -255,12 +255,17 @@
   #define IS_ULTIPANEL
 #endif
 
+// LVGL UI, SPI or FSMC
+#if EITHER(TFT_LVGL_UI_SPI, TFT_LVGL_UI_FSMC)
+  #define HAS_TFT_LVGL_UI 1
+#endif
+
 // FSMC/SPI TFT Panels
 #if ENABLED(FSMC_GRAPHICAL_TFT)
   #define DOGLCD
   #define IS_ULTIPANEL
   #define DELAYED_BACKLIGHT_INIT
-#elif ENABLED(SPI_GRAPHICAL_TFT)
+#elif ENABLED(TFT_LVGL_UI_SPI)
   #define DELAYED_BACKLIGHT_INIT
 #endif
 
