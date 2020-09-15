@@ -188,7 +188,7 @@ void MMU2::mmu_loop() {
 
     case -2:
       if (rx_ok()) {
-        sscanf(rx_buffer, "%" SCNd16 "\n", &version);
+        sscanf(rx_buffer, "%uok\n", &version);
 
         DEBUG_ECHOLNPAIR("MMU => ", version, "\nMMU <= 'S2'");
 
@@ -199,7 +199,7 @@ void MMU2::mmu_loop() {
 
     case -3:
       if (rx_ok()) {
-        sscanf(rx_buffer, "%" SCNd16 "\n", &buildnr);
+        sscanf(rx_buffer, "%uok\n", &buildnr);
 
         DEBUG_ECHOLNPAIR("MMU => ", buildnr);
 
