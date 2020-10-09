@@ -132,17 +132,11 @@
    * Hardware serial communication ports.
    * If undefined software serial is used according to the pins below
    */
-  //#define X_HARDWARE_SERIAL  Serial1
-  //#define X2_HARDWARE_SERIAL Serial1
-  //#define Y_HARDWARE_SERIAL  Serial1
-  //#define Y2_HARDWARE_SERIAL Serial1
-  //#define Z_HARDWARE_SERIAL  Serial1
-  //#define Z2_HARDWARE_SERIAL Serial1
-  //#define E0_HARDWARE_SERIAL Serial1
-  //#define E1_HARDWARE_SERIAL Serial1
-  //#define E2_HARDWARE_SERIAL Serial1
-  //#define E3_HARDWARE_SERIAL Serial1
-  //#define E4_HARDWARE_SERIAL Serial1
+  //#define X_HARDWARE_SERIAL  MSerial1
+  //#define Y_HARDWARE_SERIAL  MSerial1
+  //#define Z_HARDWARE_SERIAL  MSerial1
+  //#define E0_HARDWARE_SERIAL MSerial1
+  //#define E1_HARDWARE_SERIAL MSerial1
 
   //
   // Software serial
@@ -239,9 +233,6 @@
 //
 // LCD / Controller
 //
-#ifndef BEEPER_PIN
-  #define BEEPER_PIN                        PC5
-#endif
 
 /**
  * Note: MKS Robin TFT screens use various TFT controllers.
@@ -290,32 +281,8 @@
 
 #endif
 
-#if ENABLED(TFT_LVGL_UI_SPI)
-
-  // LVGL
-
-  #define XPT2046_X_CALIBRATION           -17253
-  #define XPT2046_Y_CALIBRATION            11579
-  #define XPT2046_X_OFFSET                   514
-  #define XPT2046_Y_OFFSET                   -24
-
-#elif ENABLED(SPI_GRAPHICAL_TFT)
-
+#if ENABLED(SPI_GRAPHICAL_TFT)
   // Emulated DOGM SPI
-
-  #ifndef XPT2046_X_CALIBRATION
-    #define XPT2046_X_CALIBRATION         -11386
-  #endif
-  #ifndef XPT2046_Y_CALIBRATION
-    #define XPT2046_Y_CALIBRATION           8684
-  #endif
-  #ifndef XPT2046_X_OFFSET
-    #define XPT2046_X_OFFSET                 339
-  #endif
-  #ifndef XPT2046_Y_OFFSET
-    #define XPT2046_Y_OFFSET                 -18
-  #endif
-
   #ifndef GRAPHICAL_TFT_UPSCALE
     #define GRAPHICAL_TFT_UPSCALE              3
   #endif
@@ -331,6 +298,11 @@
   #define LCD_PINS_RS                       PC6
 
 #elif ENABLED(TFT_480x320_SPI)
+  #define TFT_DRIVER                      ST7796
+  #define TFT_BUFFER_SIZE                  14400
+#endif
+
+#if EITHER(TFT_LVGL_UI_SPI, TFT_480x320_SPI)
   #ifndef XPT2046_X_CALIBRATION
     #define XPT2046_X_CALIBRATION         -17253
   #endif
@@ -343,13 +315,22 @@
   #ifndef XPT2046_Y_OFFSET
     #define XPT2046_Y_OFFSET                 -24
   #endif
-
-  #define TFT_DRIVER                      ST7796
-  #define TFT_BUFFER_SIZE                  14400
-
+#elif ENABLED(SPI_GRAPHICAL_TFT)
+  #ifndef XPT2046_X_CALIBRATION
+    #define XPT2046_X_CALIBRATION         -11386
+  #endif
+  #ifndef XPT2046_Y_CALIBRATION
+    #define XPT2046_Y_CALIBRATION           8684
+  #endif
+  #ifndef XPT2046_X_OFFSET
+    #define XPT2046_X_OFFSET                 339
+  #endif
+  #ifndef XPT2046_Y_OFFSET
+    #define XPT2046_Y_OFFSET                 -18
+  #endif
 #endif
 
-#if HAS_SPI_LCD && !HAS_SPI_TFT
+#if HAS_WIRED_LCD && !HAS_SPI_TFT
 
   // NON TFT Displays
 
@@ -364,6 +345,19 @@
     #define DOGLCD_CS                       PE15
     #define DOGLCD_SCK                      PA5
     #define DOGLCD_MOSI                     PA7
+
+  #elif IS_TFTGLCD_PANEL
+
+    #if ENABLED(TFTGLCD_PANEL_SPI)
+      #define PIN_SPI_SCK                   PA5
+      #define PIN_TFT_MISO                  PA6
+      #define PIN_TFT_MOSI                  PA7
+      #define TFTGLCD_CS                    PE8
+    #endif
+
+    #ifndef BEEPER_PIN
+      #define BEEPER_PIN                    -1
+    #endif
 
   #else                                           // !MKS_MINI_12864
 
@@ -386,15 +380,19 @@
 
   #endif // !MKS_MINI_12864
 
-#endif // HAS_SPI_LCD && !HAS_SPI_TFT
+#endif // HAS_WIRED_LCD && !HAS_SPI_TFT
 
 #define HAS_SPI_FLASH                          1
-#define SPI_FLASH_SIZE                 0x1000000  // 16MB
 #if HAS_SPI_FLASH
+  #define SPI_FLASH_SIZE               0x1000000  // 16MB
   #define W25QXX_CS_PIN                     PB12
   #define W25QXX_MOSI_PIN                   PB15
   #define W25QXX_MISO_PIN                   PB14
   #define W25QXX_SCK_PIN                    PB13
+#endif
+
+#ifndef BEEPER_PIN
+  #define BEEPER_PIN                        PC5
 #endif
 
 #if ENABLED(SPEAKER) && BEEPER_PIN == PC5
