@@ -125,17 +125,12 @@
    * Hardware serial communication ports.
    * If undefined software serial is used according to the pins below
    */
-  //#define X_HARDWARE_SERIAL  Serial1
-  //#define X2_HARDWARE_SERIAL Serial1
-  //#define Y_HARDWARE_SERIAL  Serial1
-  //#define Y2_HARDWARE_SERIAL Serial1
-  //#define Z_HARDWARE_SERIAL  Serial1
-  //#define Z2_HARDWARE_SERIAL Serial1
-  //#define E0_HARDWARE_SERIAL Serial1
-  //#define E1_HARDWARE_SERIAL Serial1
-  //#define E2_HARDWARE_SERIAL Serial1
-  //#define E3_HARDWARE_SERIAL Serial1
-  //#define E4_HARDWARE_SERIAL Serial1
+  //#define X_HARDWARE_SERIAL  MSerial1
+  //#define Y_HARDWARE_SERIAL  MSerial1
+  //#define Z_HARDWARE_SERIAL  MSerial1
+  //#define E0_HARDWARE_SERIAL MSerial1
+  //#define E1_HARDWARE_SERIAL MSerial1
+  //#define E2_HARDWARE_SERIAL MSerial1
 
   //
   // Software serial
@@ -230,7 +225,13 @@
     #define BTN_EN2                         PG4
   #endif
 
-#elif HAS_SPI_LCD
+#elif IS_TFTGLCD_PANEL
+
+  #if ENABLED(TFTGLCD_PANEL_SPI)
+    #define TFTGLCD_CS                      PG5
+  #endif
+
+#elif HAS_WIRED_LCD
 
   #define BEEPER_PIN                        PC5
   #define BTN_ENC                           PG2
@@ -259,6 +260,7 @@
     #endif
 
   #endif // !MKS_MINI_12864 && !ENDER2_STOCKDISPLAY
+
 #endif
 
 #ifndef BOARD_ST7920_DELAY_1
