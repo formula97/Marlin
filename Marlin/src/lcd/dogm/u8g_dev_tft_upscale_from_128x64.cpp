@@ -58,7 +58,7 @@
 #if HAS_MARLINUI_U8GLIB && (PIN_EXISTS(FSMC_CS) || HAS_SPI_GRAPHICAL_TFT)
 
 #include "HAL_LCD_com_defines.h"
-#include "ultralcd_DOGM.h"
+#include "marlinui_DOGM.h"
 
 #include <string.h>
 
@@ -346,7 +346,7 @@ uint8_t u8g_dev_tft_320x240_upscale_from_128x64_fn(u8g_t *u8g, u8g_dev_t *dev, u
 
   switch (msg) {
     case U8G_DEV_MSG_INIT:
-      dev->com_fn(u8g, U8G_COM_MSG_INIT, U8G_SPI_CLK_CYCLE_NONE, NULL);
+      dev->com_fn(u8g, U8G_COM_MSG_INIT, U8G_SPI_CLK_CYCLE_NONE, nullptr);
       tftio.Init();
       tftio.InitTFT();
 
