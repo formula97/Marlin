@@ -499,9 +499,9 @@
     #define DEFAULT_Ki_LIST {   1.08,   1.08 }
     #define DEFAULT_Kd_LIST { 114.00, 114.00 }
   #else
-    #define DEFAULT_Kp 16.5
-    #define DEFAULT_Ki 1.16
-    #define DEFAULT_Kd 58.8
+    #define DEFAULT_Kp 18.51
+    #define DEFAULT_Ki 1.49
+    #define DEFAULT_Kd 57.59
   #endif
 #endif // PIDTEMP
 
@@ -1133,14 +1133,14 @@
 // @section extruder
 
 // For direct drive extruder v9 set to true, for geared extruder set to false.
-#define INVERT_E0_DIR false
-#define INVERT_E1_DIR false
-#define INVERT_E2_DIR false
-#define INVERT_E3_DIR false
-#define INVERT_E4_DIR false
-#define INVERT_E5_DIR false
-#define INVERT_E6_DIR false
-#define INVERT_E7_DIR false
+#define INVERT_E0_DIR true
+#define INVERT_E1_DIR true
+#define INVERT_E2_DIR true
+#define INVERT_E3_DIR true
+#define INVERT_E4_DIR true
+#define INVERT_E5_DIR true
+#define INVERT_E6_DIR true
+#define INVERT_E7_DIR true
 
 // @section homing
 
@@ -1163,7 +1163,7 @@
 
 // The size of the print bed
 #define X_BED_SIZE 250
-#define Y_BED_SIZE 210
+#define Y_BED_SIZE 204
 
 // Travel limits (mm) after homing, corresponding to endstop positions.
 #define X_MIN_POS 0
